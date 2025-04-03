@@ -8,12 +8,12 @@
 
 #define USER_BUTTON MCU_PIN_29
 
-#define IR1_SENSE   MCU_PIN_90
+#define IR1_SENSE   MCU_PIN_78
 
-#define RAIN1_SENSE MCU_PIN_73
+#define RAIN1_SENSE MCU_PIN_32
 
-#define ULTRASONIC_ECHO1   MCU_PIN_54
-#define ULTRASONIC_TRIG1   MCU_PIN_78
+#define ULTRASONIC_ECHO1   MCU_PIN_68
+#define ULTRASONIC_TRIG1   MCU_PIN_67
 
 #define ULTRASONIC_ECHO2 0xFF // To be defined by user, refer ULTRASONIC_ECHO1
 #define ULTRASONIC_ECHO3 0xFE // To be defined by user, refer ULTRASONIC_ECHO1
