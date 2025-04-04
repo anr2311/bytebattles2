@@ -12,24 +12,11 @@
 #include "app_adc.h"
 #include "app_rpi.h"
 #include "ultrasonic.h"
-#include "colour.h"
 
 #include "asdk_app.h"
 
 /* Debug Print includes */
 #include "debug_print.h"
-
-/* Todo: Color calibiration */
-
-#define RED_NO_LIGHT_VALUE      328
-#define RED_WHITE_LIGHT_VALUE   127 
-#define GREEN_NO_LIGHT_VALUE    387
-#define GREEN_WHITE_LIGHT_VALUE 142
-#define BLUE_NO_LIGHT_VALUE      332
-#define BLUE_WHITE_LIGHT_VALUE   109
-
-colour_components_t colour_c;
-colour_components_t colour_map;
 
 /* ASDK User Action: Declare new task below */
 
@@ -83,7 +70,6 @@ void asdk_app_init()
     app_adc_init();
     app_rpi_init();
     app_adc_start_conversion();
-    colour_sensor_init();
 
     /* Enabling the interrupt */
     asdk_sys_enable_interrupts();
@@ -94,23 +80,10 @@ void asdk_app_init()
 static void task_1ms(void)
 {
     ultrasonic_iterations();
-    get_colour_sensor_reading(&colour_c);
 }
 
 static void task_5ms(void)
 {
-    colour_sensor_iteration();
-
-    if(get_current_filter() == BLUE_FILTER)
-    {
-        /* Colour detection */
-
-        // colour_map.red = MAP(colour_c.red, RED_NO_LIGHT_VALUE, RED_WHITE_LIGHT_VALUE);
-        // colour_map.green = MAP(colour_c.green, GREEN_NO_LIGHT_VALUE, GREEN_WHITE_LIGHT_VALUE);
-        // colour_map.blue = MAP(colour_c.blue, BLUE_NO_LIGHT_VALUE, BLUE_WHITE_LIGHT_VALUE);
-
-        /* Todo: Take action after detecting the right colour */
-    }
 
 }
 
