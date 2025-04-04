@@ -9,7 +9,6 @@
 #include "app_gpio.h"
 #include "gpio_cfg.h"
 #include "app_can.h"
-#include "colour.h"
 
 /* Debug Print includes */
 #include "debug_print.h"
@@ -26,10 +25,6 @@ static void gpio_callback(asdk_mcu_pin_t mcu_pin, uint32_t pin_state)
     {
     case MCU_PIN_29:
         button_pressed = true;
-        break;
-
-        case MCU_PIN_71:
-        colour_sensor_callback(pin_state);
         break;
 
     default:

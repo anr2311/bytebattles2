@@ -19,8 +19,4 @@
 #define ULTRASONIC_ECHO3 0xFE // To be defined by user, refer ULTRASONIC_ECHO1
 #define ULTRASONIC_ECHO4 0xFD // To be defined by user, refer ULTRASONIC_ECHO1
 
-#define COLOUR_SENSOR_S2    MCU_PIN_17
-#define COLOUR_SENSOR_S3    MCU_PIN_14
-#define COLOUR_SENSOR       MCU_PIN_71
-
 #endif /* GPIO_CFG_H */
