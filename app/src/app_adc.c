@@ -25,6 +25,8 @@ uint8_t ADC_Index = 0;
 
 static uint32_t LDR_brightness_lvl;
 
+static bool app_adc_headlight_status = false;
+
 void adc_callback(asdk_adc_callback_t params)
 {
     if (ASDK_ADC_CALLBACK_REASON_CONVERSION_COMPLETE == params.callback_reason)
@@ -97,8 +99,19 @@ void app_ldr_iteration()
 {
     LDR_brightness_lvl = app_get_adc_value(LDR_ADC_PIN);
 
-    if (LDR_brightness_lvl > 3000)
+    if (LDR_brightness_lvl >= ADC_HIGH_BEAM_THRESHOLD)
     {
         /* Take action */
+        app_adc_headlight_status = true;
     }
+    else
+    {
+        /* headlight should be off */
+        app_adc_headlight_status = false;
+    }
+}
+
+bool app_adc_return_headlight_status(void)
+{
+    return app_adc_headlight_status;
 }
