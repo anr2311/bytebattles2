@@ -1,8 +1,6 @@
-# Welcome to ByteBattles!
+# ByteBattles 2.0 - Team Continental's Submission!
 
-We're thrilled to have you join us for this exciting firmware development hackathon!
-
-To get started, please follow the installation and setup steps outlined below. This will ensure you have all the necessary tools and environment ready for ByteBattles. Good luck, and let the coding begin!
+Team Continental participated at the Ather's Byte Battles 2.0 All India Firmware Hackathon. This repo contains the submission codebase.
 
 # Software Installation Guide
 
