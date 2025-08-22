@@ -1,0 +1,24 @@
+#!gbuild
+macro DIE=tviibh16m
+macro SERIES=cyt6bj
+#macro DEVICE=CYT6BJ8DDE   # 176-TEQFP
+macro DEVICE=CYT6BJCDHE   # 320-BGA
+macro CPU_BOARD=CY_320BGA_EVK_rev_a
+
+macro SERIES_FOLDER_REL_PATH=..\..
+macro COMMON_FOLDER_REL_PATH=..\..\..\common
+macro RTOS_PORT_PATH=GHS\ARM_CM7\r0p1
+
+[Project]
+    :optionsFile=options_global.opt
+    
+_gpj/flash.gpj
+_gpj/sram.gpj
+_gpj/libmw_top.gpj
+_gpj/libsdl_top.gpj
+_gpj/librtos_top.gpj
+{isdefined(BUILD_CRYPTO_LIBS)}_gpj/libcrypto_top.gpj
+_gpj/debugging.gpj
+options_global.opt
+options_cm0plus.opt
+options_cm7.opt

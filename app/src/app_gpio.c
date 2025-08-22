@@ -15,6 +15,14 @@
 
 volatile bool button_pressed = false;
 
+static uint8_t IR_detect_left_status = 0;
+static uint8_t IR_detect_right_status = 0;
+static uint8_t IR_detect_middle_status = 0;
+static bool Rain_detected_status;
+static bool temp = false; //Temporary variable to store rain sensor state
+
+static uint8_t rain_detected_debounce_counter = 0x00u;
+
 static void ir_sensor_iteration(void);
 static void rain_sensor_iteration(void);
 
@@ -121,20 +129,118 @@ void app_gpio_toggle(asdk_mcu_pin_t pin)
 
 static void ir_sensor_iteration(void)
 {
-    /* IR Sensing */
-    if (app_gpio_get_pin_state(IR1_SENSE) == false) {
+    /* IR Sensing Left */
+    if (app_gpio_get_pin_state(IR_SENSE_LEFT) == false) {
         /* IR detected */
+        IR_detect_left_status = 1;
     } else {
         /* IR not detected */
+       IR_detect_left_status = 0;
+    }
+
+    /* IR Sensing Right */
+    if (app_gpio_get_pin_state(IR_SENSE_RIGHT) == false) {
+        /* IR detected */
+        IR_detect_right_status = 1;
+    } else {
+        /* IR not detected */
+       IR_detect_right_status = 0;
+    }
+
+    /* IR Sensing Middle */
+    if ((app_gpio_get_pin_state(IR_SENSE_MIDDLE) == false) || (app_gpio_get_pin_state(IR_SENSE_MIDDLE_1) == false)) 
+    {
+        /* IR detected */
+        IR_detect_middle_status = 1;   //Inverted logic because following the white line
+    } else {
+        /* IR not detected */
+       IR_detect_middle_status = 0;    //Inverted logic because following the white line
     }
 }
 
 static void rain_sensor_iteration(void)
 {
     /* Rain Sensing */
+    
     if (app_gpio_get_pin_state(RAIN1_SENSE) == true) {
-
+        rain_detected_debounce_counter = rain_detected_debounce_counter + 2;
+        if(rain_detected_debounce_counter >= 10)
+        {
+            rain_detected_debounce_counter = 10; //Max value
+        }
+        Rain_detected_status = true; //Rain detected 
     } else {
+        if(rain_detected_debounce_counter >= 4)
+        {
+            rain_detected_debounce_counter = rain_detected_debounce_counter - 4;
+        }
+        else
+        {
+            rain_detected_debounce_counter = 0; //Min value
+        }
+        Rain_detected_status = false; //Rain not detected 
+    }
+}
 
+
+uint8_t get_ir_left_status(void)
+{
+    return IR_detect_left_status;
+}
+
+uint8_t get_ir_right_status(void)
+{
+    return IR_detect_right_status;
+}
+
+uint8_t get_ir_middle_status(void)
+{
+    return IR_detect_middle_status;
+}
+
+bool get_rain_status(void)
+{
+    return Rain_detected_status;
+}
+
+bool startup_condition(void)
+{
+    
+}
+
+
+
+uint8_t app_gpio_IR_direction()
+{
+    uint8_t var = (IR_detect_left_status<<2u) | (IR_detect_middle_status<<1u) | (IR_detect_right_status);
+
+    switch (var)
+    {
+        case 0x00: 
+            return (uint8_t)CAUTION;
+            break;
+        case 0x01:
+            return (uint8_t)DIRECTION_RIGHT;
+            break;
+        case 0x02:
+            return (uint8_t)DIRECTION_STRAIGHT;
+            break;
+        case 0x03: 
+            return (uint8_t)DIRECTION_SLIGHT_RIGHT;
+            break;
+        case 0x04:
+            return (uint8_t)DIRECTION_LEFT;
+            break;
+        case 0x06:
+            return (uint8_t)DIRECTION_SLIGHT_LEFT; 
+            break;
+        case 0x07:
+            return (uint8_t)PARK;
+            break;
+        case 0x05:
+            return (uint8_t)CAUTION;
+            break;
+        default:
+            break;
     }
 }

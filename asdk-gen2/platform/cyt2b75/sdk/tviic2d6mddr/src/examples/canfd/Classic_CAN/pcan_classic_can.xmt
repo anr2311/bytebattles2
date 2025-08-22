@@ -1,0 +1,12 @@
+; C:\Users\VenkatesanAs\Documents\SVN\SDL_Trunk_IFX\tviic2d6mddr\src\examples\canfd\Classic_CAN\pcan_classic_can.xmt
+;   CAN messages saved by PCAN-View v5.0.2.838
+;
+; Columns descriptions:
+; ~~~~~~~~~~~~~~~~~~~~~
+; +Message ID
+; |            +Cycle time in ms (0=manual)
+; |            |  +Data length
+; |            |  |  +Frame type
+; |            |  |  |  +Message data
+; |            |  |  |  |
+010h           0  8  D 01h 02h 03h 04h 05h 06h 07h 08h ; frame1

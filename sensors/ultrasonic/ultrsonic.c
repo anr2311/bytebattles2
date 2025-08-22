@@ -11,6 +11,10 @@ static uint32_t distance_start_1;
 
 static uint32_t distance_increment_1;
 
+static uint64_t time_in_seconds;
+static uint64_t velocity_of_sound; // Speed of sound in air in m/s
+static uint64_t object_distance;
+
 static uint32_t total_distance_1;
 static uint32_t total_distance_2;
 static uint32_t total_distance_3;
@@ -32,11 +36,20 @@ static void __ultrasonic_echo(void)
         distance_increment_1 = asdk_sys_get_time_ms();
     } else {
         total_distance_1 = (distance_increment_1 - distance_start_1);
+        total_distance_1 = total_distance_1 * 1000 / 59u; // Convert to microseconds
         /* NOTE: The distance calculation is based on the formula:
             object_distance = velocity of sound / (2*time)
             total_distance = total_distance * MILLI_TO_MICRO / object_distance;
         */
         /* Todo: Calculate distance */
+
+        // time_in_seconds = (distance_increment_1 - distance_start_1) / 1000u;
+        // velocity_of_sound = 343; // Speed of sound in air in m/s
+        // object_distance = velocity_of_sound / (2 * time_in_seconds);
+
+        /* Update total distance */
+        // total_distance_1 = total_distance_1 * 1000000 / object_distance; // Convert to microseconds
+
         ultrasonic_echo_flag_1 = true;
     }    
 }
